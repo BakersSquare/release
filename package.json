@@ -1,0 +1,9 @@
+{
+  "name": "re-lease",
+  "version": "1.0.0",
+  "description": "FSE301 project",
+  "main": "index.js",
+  "repository": "https://github.com/BakersSquare/release.git",
+  "author": "Bakers_Square <bkrjuan68@gmail.com>",
+  "license": "MIT"
+}
