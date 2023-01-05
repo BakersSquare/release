@@ -19,6 +19,11 @@ body {
   height: fit-content;
 }
 
+.app-container{
+  height:fit-content;
+  overflow: none;
+}
+
 ul {
   list-style: none;
 }
@@ -33,7 +38,6 @@ ul {
   justify-content: space-between;
   padding: 0px 3rem;
   background-color: white;
-
 }
 
 .nav-menu {
@@ -119,7 +123,9 @@ ul {
   justify-content: space-evenly;
   padding: 3rem 0;
   .column{
+    display: flex;
     flex-direction: column;
+    align-items: center;
 
       .li {
         font-size: small;
@@ -199,7 +205,7 @@ ul {
       font-size: x-large;
     }
   }  
-  
+
   .register-form{
     display: flex;
     flex-direction: column;
@@ -263,6 +269,12 @@ ul {
 
 .contact-form > .submit-button {
   grid-column: 1 / span 2;
+}
+
+.copyright-claim{
+  display: flex;
+  justify-content: center;
+  margin-bottom: 1rem;
 }
 
 .error {

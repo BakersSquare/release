@@ -32,6 +32,8 @@ function App() {
   }
   return (
     <BrowserRouter>
+    <div className="app-container">
+      
       <Navbar isOpen={openNavMenu} toggleMenu={hamburgerClick} toggleSignIn={signInClick}/>
       <SignInCard isOpen={openSignInCard} toggleSignIn={signInClick}/>
       <Routes>
@@ -39,6 +41,7 @@ function App() {
         <Route path="/contact" element={<Contact />}/>
       </Routes>
       <Footer />
+    </div>
     </BrowserRouter>
   );
 }

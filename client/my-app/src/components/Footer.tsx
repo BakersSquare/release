@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 
 
 function Footer() {
@@ -5,30 +6,16 @@ function Footer() {
     <div>
       <div className="footer" style={{background:"lightgray"}}>
       <div className="column">
-          This is a footer column
           <ul>
-            <li>Home</li>
-            <li>About</li>
-            <li>Contact Us</li>
-            <li>Help</li>
-            <li>Advertise</li>
-            <li>Terms of Use</li>
-          </ul>
-      </div>
-      <div className="column">
-          This is a footer column
-          <ul>
-            <li>Home</li>
-            <li>About</li>
-            <li>Contact Us</li>
-            <li>Help</li>
-            <li>Advertise</li>
-            <li>Terms of Use</li>
+            <li><Link to="/">Home</Link></li>
+            <li><Link to="/contact">Contact Us</Link></li>
+            <li><Link to="/">Advertise</Link></li>
+            <li><Link to="/">Terms of use</Link></li>
           </ul>
       </div>
     </div>
-    <div>
-      copyright claim
+    <div className="copyright-claim">
+      Content copyright 2021. Re-lease. All rights reserved.
     </div>
   </div>
   );

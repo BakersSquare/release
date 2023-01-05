@@ -66,7 +66,7 @@ const initialValuesContactForm = {
 function Contact() {
 
   return (
-    <div style={{maxWidth:"50%", padding: "1rem"}}>
+    <div style={{padding: "1rem"}}>
       <H3>CONTACT US</H3>
       <p>Have a question or concern? Send us a question and we'll get back to you as soon as possible.</p>
 
