@@ -1,0 +1,23 @@
+import * as jwt from "jsonwebtoken";
+
+// Pass this function as middleware to other routes to make sure the user has the credentials to do this
+
+// 59:00 into the tutorial
+export const verifyToken = async (req, res, next) => {
+  try {
+    let token = req.header("Authorization");
+    if(!token){
+      return res.status(403).send("Access Denied");
+    }
+    
+    if(token.startsWith("Bearer ")){
+      token = token.slice(7, token.length).trimLeft();
+    }
+
+    const verified = jwt.verify(token, process.env.JWT_SECRET);
+    req.user = verified;
+    next();
+  } catch (err) {
+    res.status(500).json({msg: err.message});
+  }
+}

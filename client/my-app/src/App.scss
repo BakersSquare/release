@@ -1,0 +1,270 @@
+@import "~normalize.css";
+@import "~@blueprintjs/core/lib/scss/variables";
+@import "~@blueprintjs/core/lib/css/blueprint.css";
+@import "~@blueprintjs/icons/lib/css/blueprint-icons.css";
+@import url('https://fonts.googleapis.com/css2?family=Quicksand&display=swap');
+
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  margin: 0;
+  font-family: 'Quicksand', sans-serif;
+  background: lightgrey;
+  overflow-x: hidden;
+  height: fit-content;
+}
+
+ul {
+  list-style: none;
+}
+
+.header {
+  width: 100%;
+  height: fit-content;
+  display: flex;
+  align-items: center;
+  padding: 1rem;
+  border: 1px solid lightgray;
+  justify-content: space-between;
+  padding: 0px 3rem;
+  background-color: white;
+
+}
+
+.nav-menu {
+  display: flex;
+  flex-direction: row;
+}
+
+.nav-menu li {
+  padding: 1rem;
+  font-size: larger;
+  font-weight: bold;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+
+  p {
+    font-size: xx-large;
+  }
+}
+
+.homepage {
+  .hero {
+    object-fit: contain;
+    width: 100%;
+    z-index: -1;
+    height: 25rem;
+
+    background-image: linear-gradient(to bottom, rgba(228,221,221, 0.50) 10%, rgba(37, 37, 38, 0.8) 100%), url('./assets/house-hero.jpg');
+    background-position: center;
+    background-size: cover;
+  }
+
+  .hero-image-content {
+    text-align: center;
+    position: absolute;
+    margin: auto;
+    width: 100%;
+    margin-top: 4rem;
+
+    p {
+      font-size: xx-large;
+    }
+  }
+}
+
+.hamburger {
+  display: none;
+}
+
+.ribbon {
+  height: 20rem;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  gap: 8rem;
+  align-items: center;
+  background-color: white;
+
+  p {
+    display: flex;
+    flex-direction: column;
+    font-size: x-large;
+  }
+
+  img {
+    height: 17.5rem;
+  }
+}
+
+.open-popup{
+  width:fit-content
+}
+
+.content > p {
+  font-size: x-large;
+}
+
+.footer {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  padding: 3rem 0;
+  .column{
+    flex-direction: column;
+
+      .li {
+        font-size: small;
+      }
+  }
+}
+
+.email-input {
+  min-width: 20rem;
+  max-width: 75rem;
+  height:"2rem";
+  width:95%;
+}
+
+.input-field {
+  font-size: larger;
+  padding: 10px;
+}
+
+.sign-in-label{
+  color:#405EAF;
+  cursor: pointer;
+}
+
+.register-form{
+  display: grid;
+  margin: auto;
+  grid-template-columns: 2fr 2fr;
+  grid-template-rows: 1fr 1fr 1fr 1fr;
+  gap: 1rem;
+  padding: 1rem;
+  font-size: large;
+
+  > input {
+    height: 2rem;
+  }
+
+  > .alternate-field {
+    grid-column: span 2;
+    font-size: large
+  }
+
+  > button {
+    height: 3rem;
+    grid-column: span 2;
+    color: $white;
+    background: $blue3;
+  }
+  > button:hover{
+    cursor: pointer;
+  }
+}
+
+.sign-in-label:hover{
+  color:#405EAF;
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+@media screen and (max-width:600px) {
+  .ribbon {
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    height: fit-content;
+    gap: 2rem;
+    padding: 2rem;
+
+    img {
+      width: 23rem;
+    }
+  
+    p {
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      font-size: x-large;
+    }
+  }  
+  
+  .register-form{
+    display: flex;
+    flex-direction: column;
+  }
+}
+
+@media screen and (max-width:890px) {
+  .hamburger {
+    display: block;
+    z-index: 5;
+  }
+
+  .nav-menu {
+    position: absolute;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-end;
+
+    top: 0;
+    text-align: start;
+    min-width: fit-content;
+    width: 30vw;
+    height: 100vh;
+    transition: .3s;
+    background-color: white;
+    z-index: 4;
+    padding: 1rem;
+
+    text-align: right;
+  }
+
+  .nav-menu.active{
+    position:fixed;
+    right: 0;
+  }
+
+  .nav-menu.inactive{
+    right: -100%;
+  }
+
+  .nav-menu li {
+    padding: 1rem 0;
+    font-size: 2rem;
+    margin-right: 1rem;
+    border-bottom: 2px solid darkgray;
+  }
+}
+
+.contact-form {
+  display: grid;
+  margin: auto;
+  grid-template-columns: 1fr 3fr;
+  grid-template-rows: 1fr 1fr 1fr 1fr;
+  row-gap: 1rem;
+  padding: 1rem;
+}
+
+.contact-form > input, .contact-form > textarea {
+  height: fit-content
+}
+
+.contact-form > .submit-button {
+  grid-column: 1 / span 2;
+}
+
+.error {
+  background: $red5;
+}
