@@ -98,7 +98,7 @@ function Contact() {
                         </label>
                         <input className={`${errors.email && touched.email ? "error" : ""}`} placeholder="" onBlur={handleBlur} onChange={handleChange} value={values.email} name="email"/>
                         <label>
-                          Phone Number (Optional)
+                          Phone Number
                         </label>
                         <input className={`${errors.phoneNum && touched.phoneNum ? "error" : ""}`} placeholder="XXX-XXX-XXXX" onBlur={handleBlur} onChange={handleChange} value={values.phoneNum} name="phoneNum"/>
                         <label>
