@@ -55,7 +55,11 @@ app.post("/contactForm", upload.none(), contactForm)
 
 // Mongoose setup
 const CONNECT_URL = process.env.MONGO_URL;
-const PORT = process.env.PORT || 3001;
+const PORT = process.env.PORT;
+
+if(process.env.NODE_ENV === 'production'){
+  app.use(express.static('client/build'))
+}
 
 mongoose.set('strictQuery', true);
 mongoose.connect(CONNECT_URL, {
