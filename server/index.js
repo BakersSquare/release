@@ -58,7 +58,7 @@ app.get('/', (req, res) => {
 // app.use("/posts", postRoutes);
 
 // Mongoose setup
-const CONNECT_URI = process.env.MONGODB_URI || 3001;
+const CONNECT_URI = process.env.MONGODB_URI;
 const PORT = process.env.PORT;
 
 if(process.env.NODE_ENV === 'production'){
