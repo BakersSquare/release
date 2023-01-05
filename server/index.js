@@ -47,14 +47,18 @@ app.post("/posts", verifyToken, upload.single("picture"))
 
 // Other routes (No file uploads, thus upload.none())
 app.use("/auth", upload.none(), authRoutes);
-app.post("/contactForm", upload.none(), contactForm)
+app.post("/contactForm", upload.none(), contactForm);
+
+app.get('/', (req, res) => {
+  res.send("App is running...");
+})
 
 // He's using userRoutes to generically define the functions you should be able to use to grab information about generic users (Friends, profile info, etc). We will also need this because our application will have a houseArray + default profile info
 // app.use("/users", userRoutes);
 // app.use("/posts", postRoutes);
 
 // Mongoose setup
-const CONNECT_URL = process.env.MONGO_URL;
+const CONNECT_URI = process.env.MONGODB_URI || 3001;
 const PORT = process.env.PORT;
 
 if(process.env.NODE_ENV === 'production'){
@@ -62,7 +66,7 @@ if(process.env.NODE_ENV === 'production'){
 }
 
 mongoose.set('strictQuery', true);
-mongoose.connect(CONNECT_URL, {
+mongoose.connect(CONNECT_URI, {
   useNewUrlParser: true,
   useUnifiedTopology: true
 }).then(() => {
