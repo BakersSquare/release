@@ -26,7 +26,7 @@ const emailInterest = async (values:any) => {
       AppToaster.show({
         message: "Thanks for signing up with us! Be on the lookout for future updates!",
         intent: "primary",
-        timeout: 3000
+        timeout: 5000
       })
       return savedUser;
     }
@@ -98,7 +98,7 @@ function Homepage() {
                     AppToaster.show({
                       message: "Feature in development. Join the email list to stay updated with the latest campus leases.",
                       intent: "warning",
-                      timeout: 3000
+                      timeout: 5000
                     })
               }}>See Leases</Button>
           </p>
