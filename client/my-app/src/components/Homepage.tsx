@@ -1,8 +1,8 @@
-import { FormGroup, InputGroup, Button, Classes } from "@blueprintjs/core";
+import { Button, Classes } from "@blueprintjs/core";
 import HomeOwner from '../assets/happy-homeowner.jpg'
 import * as yup from "yup"
 import { Formik } from "formik";
-import { AppToaster } from "../App";
+import { AppToaster, serverURL } from "../App";
 
 
 const emailInterest = async (values:any) => {
@@ -13,7 +13,7 @@ const emailInterest = async (values:any) => {
   }
 
   const backendResponse = await fetch(
-    "http://localhost:3001/auth/emailInterest",
+    `${serverURL}/auth/emailInterest`,
     {
       method: "POST",
       body: formData
@@ -90,7 +90,7 @@ function Homepage() {
         </div>
 
         <div className="ribbon">
-          <img src={HomeOwner}></img>
+          <img alt="" src={HomeOwner}></img>
             <p>
               <h3>Stay in the loop</h3>
               Browse available leases now

@@ -1,7 +1,7 @@
-import { H3, Dialog, Colors, Button } from "@blueprintjs/core";
+import { Dialog } from "@blueprintjs/core";
 import { Formik } from "formik";
 import * as yup from "yup"
-import { AppToaster } from "../App";
+import { AppToaster, serverURL } from "../App";
 
 type Props = {
   isOpen: boolean,
@@ -17,10 +17,6 @@ const registerSchema = yup.object().shape({
   password: yup.string().required("required")
 })
 
-const loginSchema = yup.object().shape({
-  email: yup.string().email("invalid email").required("required"),
-  password: yup.string().required("required")
-})
 
 const initialValuesRegister = {
   firstName: "",
@@ -30,10 +26,14 @@ const initialValuesRegister = {
   password: ""
 }
 
-const initialValuesLogin = {
-  email: "",
-  password: ""
-}
+// const loginSchema = yup.object().shape({
+//   email: yup.string().email("invalid email").required("required"),
+//   password: yup.string().required("required")
+// })
+// const initialValuesLogin = {
+//   email: "",
+//   password: ""
+// }
 
 const register = async (values:any) => {
   const formData = new FormData();
@@ -43,7 +43,7 @@ const register = async (values:any) => {
   }
 
   const backendResponse = await fetch(
-    "http://localhost:3001/auth/register",
+    `${serverURL}/auth/register`,
     {
       method: "POST",
       body: formData

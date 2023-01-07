@@ -1,8 +1,7 @@
-import { Label, Classes, Button, H3, Colors } from "@blueprintjs/core";
-import { HEADING } from "@blueprintjs/core/lib/esm/common/classes";
+import { H3, Colors } from "@blueprintjs/core";
 import { Formik } from "formik";
 import * as yup from "yup"
-import { AppToaster } from "../App";
+import { AppToaster, serverURL } from "../App";
 
 const contactForm = async (values:any) => {
   const formData = new FormData();
@@ -12,7 +11,7 @@ const contactForm = async (values:any) => {
   }
 
   const backendResponse = await fetch(
-    "http://localhost:3001/contactForm",
+    `${serverURL}/contactForm`,
     {
       method: "POST",
       body: formData

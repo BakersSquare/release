@@ -9,6 +9,8 @@ import Contact from "./components/Contact"
 import SignInCard from "./components/SignInCard"
 import { Position, Toaster } from "@blueprintjs/core";
 
+export const serverURL = process.env.REACT_APP_SERVER_URL;
+
 export const AppToaster = Toaster.create({
   position: Position.TOP,
   maxToasts: 3
