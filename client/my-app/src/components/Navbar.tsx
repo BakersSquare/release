@@ -13,14 +13,27 @@ function Navbar (props: Props) {
       <div className="header">
         <Link to="/"><h1> Re-Lease </h1></Link>
         <ul className={`nav-menu ${props.isOpen ? "active" : "inactive"}`}>
-          <li>
+          <li onClick={() => {
+                  if(props.isOpen) {
+                    props.toggleMenu();
+                  }
+          }}>
             <Link to="/">Home</Link>
           </li>
-          <li>
+          <li onClick={() => {
+                  if(props.isOpen) {
+                    props.toggleMenu();
+                  }
+          }}>
             <Link to="/contact">Contact Us</Link>
           </li>
           <li>
-            <div className="sign-in-label"onClick={(props.toggleSignIn)}>Register</div>
+            <div className="sign-in-label"onClick={() => {
+              if(props.isOpen) {
+                props.toggleMenu();
+              }
+              props.toggleSignIn();
+            }}>Register</div>
           </li>         
            {/* <li>
             <Link to="/home-owner">For Homeowners</Link>
