@@ -54,11 +54,11 @@ app.post("/contactForm", upload.none(), contactForm)
 // app.use("/posts", postRoutes);
 
 // Mongoose setup
-const CONNECT_URL = process.env.MONGO_URL;
+const CONNECT_URI = process.env.MONGODB_URI;
 const PORT = process.env.PORT || 3001;
 
 mongoose.set('strictQuery', true);
-mongoose.connect(CONNECT_URL, {
+mongoose.connect(CONNECT_URI, {
   useNewUrlParser: true,
   useUnifiedTopology: true
 }).then(() => {
