@@ -55,7 +55,6 @@ app.post("/contactForm", upload.none(), contactForm)
 
 // Mongoose setup
 const CONNECT_URI = process.env.MONGODB_URI;
-console.log(CONNECT_URI)
 const PORT = process.env.PORT || 3001;
 
 mongoose.set('strictQuery', true);
