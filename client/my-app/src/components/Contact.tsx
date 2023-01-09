@@ -19,7 +19,7 @@ const contactForm = async (values:any) => {
   )
 
     const form = await backendResponse.json();
-    if(form){
+    if(!form.error){
       // Here is where we should put ToggleSignin. We'll have to get comfortable with redux in order to do it though.
       AppToaster.show({
         message: "Thanks for the inquiry! We'll get back to you as soon as possible.",
@@ -34,15 +34,12 @@ const contactForm = async (values:any) => {
         intent: "danger",
         timeout: 5000
       })
-      console.log("An error occured!")
     }
     // Then clear the form
 }
 
 const handleFormSubmit = async (values:any) => {
-  const res = await contactForm(values)
-  console.log(res);
-
+  await contactForm(values)
 }
 
 const contactFormSchema = yup.object().shape({

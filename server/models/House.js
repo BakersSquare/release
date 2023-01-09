@@ -30,11 +30,12 @@ const HouseSchema = new mongoose.Schema(
       type: Number,
       required: true
     },
-    interestedTenantas: {
+    interestedTenants: {
       type: Array,
       default: []
     }
-  }
+  },
+  {timestamps: true}
 )
 
 const House = mongoose.model("House", HouseSchema);

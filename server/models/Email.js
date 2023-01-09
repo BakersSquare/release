@@ -9,7 +9,8 @@ const EmailSchema = new mongoose.Schema(
       min: 2,
       max: 50
     }
-  }
+  },
+    {timestamps: true}
 )
 
 const Email = mongoose.model("Email", EmailSchema);

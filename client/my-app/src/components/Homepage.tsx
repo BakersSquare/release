@@ -21,7 +21,7 @@ const emailInterest = async (values:any) => {
   )
 
     const savedUser = await backendResponse.json();
-    if(savedUser){
+    if(!savedUser.error){
       // Here is where we should put ToggleSignin. We'll have to get comfortable with redux in order to do it though.
       AppToaster.show({
         message: "Thanks for signing up with us! Be on the lookout for future updates!",
@@ -31,9 +31,12 @@ const emailInterest = async (values:any) => {
       return savedUser;
     }
     else{
-      console.log("An error occured!")
+      AppToaster.show({
+        message: "It looks like that email is already a part of our emailing list. Thanks again for the interest!",
+        intent: "warning",
+        timeout: 5000
+      })
     }
-    // Then clear the form
 }
 
 const emailSchema = yup.object().shape({
@@ -44,9 +47,7 @@ const initialEmailRegister = {
 }
 
 const handleFormSubmit = async (values:any) => {
-  const res = await emailInterest(values)
-  console.log(res);
-
+  await emailInterest(values)
 }
 
 function Homepage() {

@@ -30,7 +30,8 @@ const ContactFormSchema = new mongoose.Schema(
       maxlength: 280,
       default: ""
     }
-  }
+  },
+  {timestamps: true}
 );
 
 const ContactForm = mongoose.model("ContactForm", ContactFormSchema);

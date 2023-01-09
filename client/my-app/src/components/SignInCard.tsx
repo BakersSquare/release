@@ -51,25 +51,27 @@ const register = async (values:any) => {
   )
 
     const savedUser = await backendResponse.json();
-    if(savedUser){
+    if(!savedUser.error){
       // Here is where we should put ToggleSignin. We'll have to get comfortable with redux in order to do it though.
       AppToaster.show({
-        message: "Thanks for the joining us! Be on the alert as we develop additional features for you.",
+        message: "Thanks for joining us! Be on the alert as we develop additional features for you.",
         intent: "primary",
         timeout: 5000
       })
       return savedUser;
     }
     else{
-      console.log("An error occured!")
+      AppToaster.show({
+        message: "Thanks for joining us! Be on the alert as we develop additional features for you.",
+        intent: "primary",
+        timeout: 5000
+      })
     }
     // Then clear the form
 }
 
 async function handleFormSubmit (values: any) {
   const res = await register(values);
-  console.log("here");
-  console.log(res);
   // Here is where we should toggle the props. We'll need redux to do that and close the form
 
   return res;
