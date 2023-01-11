@@ -1,8 +1,9 @@
-import { Button, Classes } from "@blueprintjs/core";
+import { Button, Classes, Intent } from "@blueprintjs/core";
 import HomeOwner from '../assets/happy-homeowner.jpg'
 import * as yup from "yup"
 import { Formik } from "formik";
-import { AppToaster, serverURL } from "../App";
+import { serverURL } from "../App";
+import { createToast } from "../utils/util";
 
 
 const emailInterest = async (values:any) => {
@@ -23,19 +24,12 @@ const emailInterest = async (values:any) => {
     const savedUser = await backendResponse.json();
     if(!savedUser.error){
       // Here is where we should put ToggleSignin. We'll have to get comfortable with redux in order to do it though.
-      AppToaster.show({
-        message: "Thanks for signing up with us! Be on the lookout for future updates!",
-        intent: "primary",
-        timeout: 5000
-      })
+      createToast("Thanks for signing up with us! Be on the lookout for future updates!", Intent.PRIMARY);
       return savedUser;
     }
     else{
-      AppToaster.show({
-        message: "It looks like that email is already a part of our emailing list. Thanks again for the interest!",
-        intent: "warning",
-        timeout: 5000
-      })
+      createToast("It looks like that email is already a part of our emailing list. Thanks again for the interest!", Intent.WARNING)
+
     }
 }
 
@@ -96,11 +90,7 @@ function Homepage() {
               <h3>Stay in the loop</h3>
               Browse available leases now
               <Button intent="none" onClick={() => {
-                    AppToaster.show({
-                      message: "Feature in development. Join the email list to stay updated with the latest campus leases.",
-                      intent: "warning",
-                      timeout: 5000
-                    })
+                createToast("Feature in development. Join the email list to stay updated with the latest campus leases.", Intent.WARNING);
               }}>See Leases</Button>
           </p>
         </div>

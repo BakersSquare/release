@@ -156,27 +156,58 @@ ul {
   grid-template-columns: 2fr 2fr;
   grid-template-rows: 1fr 1fr 1fr 1fr;
   gap: 1rem;
-  padding: 1rem;
+  padding-top: 1rem;
   font-size: large;
+  width: 100%;
 
-  > input {
+  input {
     height: 2rem;
   }
 
-  > .alternate-field {
+  .dropzone-outline {
+    display: flex;
+    grid-column: span 2;
+    width: 100%;
+    border: 2px solid black;
+    justify-content: center;
+    align-items: center;
+    color:black;
+    padding: 4px;
+  }
+  
+  .register-drop-zone{
+    display: flex;
+    align-items: flex-start;
+    width: 95%;
+    border: 2px dashed #405EAF;
+    font-size: large;
+    border-radius: 4px;
+    flex-direction: column;
+    padding: 4px;
+  }
+
+  .alternate-field {
     grid-column: span 2;
     font-size: large
   }
 
-  > button {
+  button {
     height: 3rem;
     grid-column: span 2;
     color: $white;
     background: $blue3;
   }
-  > button:hover{
+  button:hover{
     cursor: pointer;
   }
+}
+
+.ignore-fields{
+  text-decoration: underline;
+}
+
+.ignore-fields:hover{
+  cursor: pointer;
 }
 
 .sign-in-label:hover{

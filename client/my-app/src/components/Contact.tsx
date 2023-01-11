@@ -1,7 +1,8 @@
-import { H3, Colors } from "@blueprintjs/core";
+import { H3, Colors, Intent } from "@blueprintjs/core";
 import { Formik } from "formik";
 import * as yup from "yup"
-import { AppToaster, serverURL } from "../App";
+import { serverURL } from "../App";
+import { createToast } from "../utils/util";
 
 const contactForm = async (values:any) => {
   const formData = new FormData();
@@ -21,19 +22,11 @@ const contactForm = async (values:any) => {
     const form = await backendResponse.json();
     if(!form.error){
       // Here is where we should put ToggleSignin. We'll have to get comfortable with redux in order to do it though.
-      AppToaster.show({
-        message: "Thanks for the inquiry! We'll get back to you as soon as possible.",
-        intent: "primary",
-        timeout: 5000
-      })
+      createToast("Thanks for the inquiry, We'll get back to you as soon as possible.", Intent.PRIMARY);
       return form;
     }
     else{
-      AppToaster.show({
-        message: "There was an error submitting your form, please try again later.",
-        intent: "danger",
-        timeout: 5000
-      })
+      createToast("There was an error submitting your form, please try again later.", Intent.DANGER);
     }
     // Then clear the form
 }

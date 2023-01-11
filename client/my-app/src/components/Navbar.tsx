@@ -1,5 +1,9 @@
 import { FaTimes, FaBars } from "react-icons/fa";
 import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { setLogout } from "../state/index"
+import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 
 type Props = {
   isOpen: boolean,
@@ -8,6 +12,10 @@ type Props = {
 };
 
 function Navbar (props: Props) {
+  const [isMobileMenuToggled, setIsMobileMenuToggled] = useState(false);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  // const user = useSelector((state) => state.user);
 
   return (
       <div className="header">
