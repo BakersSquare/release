@@ -34,21 +34,21 @@ export const getUserHouseInterests = async (req, res) => {
 export const addRemoveHouseInterest = async (req, res) => {
   try {
     const {userId, houseId } = req.params;
-    const user = await User.findById(userId);
+    const user = await User.findById(userId);     // Rename this to students
     const house = await House.findById(houseId);
     
-    if(user.houses.includes(houseID)){
+    if(user.houses.includes(houseId)){
       user.houses = user.houses.filter((id) => id !== houseId);
-      house.interestedTenantas = house.interestedTenantas.filter((id) => id !== userId);
+      house.interestedTenants = house.interestedTenants.filter((id) => id !== userId);
     } else{
       user.houses.push(houseId);
-      house.interestedTenantas.push(userId);
+      house.interestedTenants.push(userId);
     }
     
     await user.save();
     await house.save();
 
-    const formattedData = houses.map(
+    const formattedData = House.map(
       ({ id, ownerFirstName, ownerLastName, streetAddress, numBedrooms, numBathrooms, monthlyRent}) => {
         return { id, ownerFirstName, ownerLastName, streetAddress, numBedrooms, numBathrooms, monthlyRent};
       }

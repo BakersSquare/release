@@ -9,6 +9,9 @@ import morgan from "morgan";
 import path from "path";
 import { fileURLToPath } from "url";
 import authRoutes from "./routes/auth.js"
+import studentRoutes from "./routes/users.js"
+import houseRoutes from "./routes/houses.js"
+import { addHouse } from "./controllers/houses.js"
 // import userRoutes from "./routes/users.js"
 // import postRoutes from "./routes/posts.js"
 import { register, contactForm } from "./controllers/auth.js"
@@ -44,12 +47,13 @@ const storage = multer.diskStorage({
 const upload = multer({storage});
 
 // Routes with files. Multer is a middleware that handles file upload. We can use upload.single() | upload.array() | upload.none()
-app.post("/auth/register", upload.single("picture"), register);     //upload single is a middleware function before running the register controller
-app.post("/posts", verifyToken, upload.single("picture"))
+app.post("/auth/register", upload.single("picture"), register);
+app.post("/house", verifyToken, upload.single("picture"), addHouse)
 
 // Other routes (No file uploads, thus upload.none())
 app.use("/auth", upload.none(), authRoutes);
 app.post("/contactForm", upload.none(), contactForm)
+app.use("/studentRoutes", studentRoutes)
 
 // He's using userRoutes to generically define the functions you should be able to use to grab information about generic users (Friends, profile info, etc). We will also need this because our application will have a houseArray + default profile info
 // app.use("/users", userRoutes);

@@ -2,7 +2,6 @@ import * as jwt from "jsonwebtoken";
 
 // Pass this function as middleware to other routes to make sure the user has the credentials to do this
 
-// 59:00 into the tutorial
 export const verifyToken = async (req, res, next) => {
   try {
     let token = req.header("Authorization");
