@@ -15,7 +15,7 @@ function Footer() {
       </div>
     </div>
     <div className="copyright-claim">
-      Content copyright 2022. Re-lease. All rights reserved.
+      Content copyright 2023. Re-lease. All rights reserved.
     </div>
   </div>
   );

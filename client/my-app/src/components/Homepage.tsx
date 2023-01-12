@@ -52,7 +52,7 @@ function Homepage() {
         
         <div className="hero-image-content" style={{padding:"1rem"}}>
             <p>We find. You sign.</p>
-            <h3 style={{marginBottom:"1rem"}}>Cut the BS out of finding student housing. Connect with interested homeowners today.</h3>
+            <h3 style={{marginBottom:"1rem"}}>Release the stress of finding student housing. Connect with interested homeowners today.</h3>
             <Formik 
               onSubmit={(values, {resetForm}) => {
                 handleFormSubmit(values);
