@@ -53,7 +53,6 @@ app.post("/contactForm", upload.none(), contactForm)
 // Other routes (No file uploads, thus upload.none())
 app.use("/auth", upload.none(), authRoutes);
 app.use("/house", upload.none(), houseRoutes)
-app.use("/studentRoutes", studentRoutes)
 
 // He's using userRoutes to generically define the functions you should be able to use to grab information about generic users (Friends, profile info, etc). We will also need this because our application will have a houseArray + default profile info
 // app.use("/users", userRoutes);

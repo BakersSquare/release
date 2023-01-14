@@ -13,11 +13,9 @@ export const addHouse = async (req, res) => {
       numBedrooms,
       numBathrooms,
       monthlyRent,
-      interestedTenants: {}
     })
-    await newHouse.save();
-
-    res.status(201).json(newHouse);
+    const constSavedUser = await newHouse.save();
+    res.status(201).json(constSavedUser);
   } catch (err) {
     res.status(409).json({message: err.message})
   }

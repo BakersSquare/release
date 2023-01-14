@@ -78,8 +78,7 @@ export const register = async (req, res) => {
 
     const salt = await bcrypt.genSalt();
     const passwordHash = await bcrypt.hash(password, salt);   // Encrypts the password
-
-    if(isHomeowner){
+    if(isHomeowner === 'true'){
       const newHomeowner = new Homeowner({
         firstName,
         lastName,
@@ -99,9 +98,7 @@ export const register = async (req, res) => {
       });
       const savedUser = await newUser.save();
       res.status(201).json(savedUser);      // 201 status code means something was created
-
     }
-
 
   } catch (e) {
     console.log(e)
@@ -117,7 +114,7 @@ export const login = async (req, res) => {
     const loginHomeOwner = await Homeowner.findOne({email: email})
 
     var user = (loginUser ? loginUser : loginHomeOwner)
-    
+
     if (!user) {
       return res.status(400).json({msg: "User does not exist"});
     }

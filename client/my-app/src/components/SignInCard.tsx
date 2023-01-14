@@ -1,6 +1,6 @@
 import { Checkbox, Dialog, Intent } from "@blueprintjs/core";
 import { Formik } from "formik";
-import { useRef, useState } from "react";
+import { useState } from "react";
 import Dropzone from "react-dropzone";
 import { useDispatch, useSelector } from "react-redux";
 import { serverURL } from "../App";
@@ -25,8 +25,8 @@ function SignInCard(props: Props) {
   const [pageType, setPageType] = useState(pageTypes.LOGIN);
   const [isChecked, setChecked] = useState(false);
 
-  const isAuth = Boolean(useSelector((state: AuthReduxState) => state.token))
-  const userId = useSelector((state: AuthReduxState) => state.user)
+  // const userId = useSelector((state: AuthReduxState) => state.user)
+  const token = useSelector((state: AuthReduxState) => state.token)
 
 
   const isLogin = pageType === pageTypes.LOGIN;
@@ -37,10 +37,14 @@ function SignInCard(props: Props) {
 
   function handlePageType(){
     switch(pageType){
-      case pageTypes.LOGIN: setPageType(pageTypes.REGISTER); break;
-      case pageTypes.REGISTER: setPageType(pageTypes.LOGIN); break;
-      case pageTypes.EXTENDED_STUDENT: props.toggleSignIn(); setPageType(pageTypes.LOGIN); break;
-      case pageTypes.EXTENDED_HOMEOWNER: props.toggleSignIn(); setPageType(pageTypes.LOGIN); break;
+      // case pageTypes.LOGIN: setPageType(pageTypes.REGISTER); break;
+      // case pageTypes.REGISTER: setPageType(pageTypes.LOGIN); break;
+      // case pageTypes.EXTENDED_STUDENT: props.toggleSignIn(); setPageType(pageTypes.LOGIN); break;
+      // case pageTypes.EXTENDED_HOMEOWNER: props.toggleSignIn(); setPageType(pageTypes.LOGIN); break;
+      case pageTypes.LOGIN: setPageType(pageTypes.EXTENDED_STUDENT); break;
+      case pageTypes.REGISTER: setPageType(pageTypes.EXTENDED_STUDENT); break;
+      case pageTypes.EXTENDED_STUDENT: props.toggleSignIn(); setPageType(pageTypes.EXTENDED_STUDENT); break;
+      case pageTypes.EXTENDED_HOMEOWNER: props.toggleSignIn(); setPageType(pageTypes.EXTENDED_STUDENT); break;
       default: setPageType(pageTypes.LOGIN); break;
     }
   }
@@ -83,7 +87,6 @@ function SignInCard(props: Props) {
     const formData = new FormData();
 
     values['isHomeowner'] = isChecked;
-
     for (let value in values) {
       formData.append(value, values[value]);
     }
@@ -153,24 +156,21 @@ function SignInCard(props: Props) {
       `${serverURL}/house/addHouse`,
       {
         method: "POST",
+        headers: {"Authorization": `Bearer ${token}`},
         body: formData
       }
     )
   
-      const savedUser = await backendResponse.json();
-      if(!savedUser.error){
+      const savedHouse = await backendResponse.json();
+      if(!savedHouse.error){
         // Here is where we should put ToggleSignin. We'll have to get comfortable with redux in order to do it though.
         // After registering, let's sign the user in
-        createToast("Thanks for joining us! Be on the alert as we develop additional features for you.", Intent.PRIMARY)
-        if(isChecked){
-          setPageType(pageTypes.EXTENDED_HOMEOWNER);
-        } else{
-          setPageType(pageTypes.EXTENDED_STUDENT);
-        }
-        return savedUser;
+        createToast("Thanks for listing! Be on the alert for messages relating to a new lease.", Intent.PRIMARY)
+        props.toggleSignIn();
+        return savedHouse;
       }
       else{        
-        createToast("It seems there was a problem creating this account. You may have to log-in to an existing one!", Intent.WARNING)
+        createToast("It seems there was a problem creating this house. Please try adding another one later", Intent.WARNING)
       }
   }
 
