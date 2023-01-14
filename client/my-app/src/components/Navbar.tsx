@@ -1,9 +1,12 @@
 import { FaTimes, FaBars } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { setLogout } from "../state/index"
+import { setLogin, setLogout } from "../state/index"
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
+import { AuthReduxState } from "../utils/types";
+import { Intent } from "@blueprintjs/core";
+import { createToast } from "../utils/util";
 
 type Props = {
   isOpen: boolean,
@@ -15,7 +18,13 @@ function Navbar (props: Props) {
   const [isMobileMenuToggled, setIsMobileMenuToggled] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  // const user = useSelector((state) => state.user);
+  const isAuth = Boolean(useSelector((state: AuthReduxState) => state.token))
+
+  /*
+        dispatch(
+          setLogin()
+        )
+  */
 
   return (
       <div className="header">
@@ -36,12 +45,24 @@ function Navbar (props: Props) {
             <Link to="/contact">Contact Us</Link>
           </li>
           <li>
-            <div className="sign-in-label"onClick={() => {
+            { isAuth ? <Link to="/" onClick={() => {
+              dispatch(
+                setLogout()
+              )
               if(props.isOpen) {
                 props.toggleMenu();
               }
-              props.toggleSignIn();
-            }}>Register</div>
+              createToast("Now logged out!", Intent.PRIMARY)
+            }
+            
+            }>Log Out</Link> : (
+                <div className="sign-in-label"onClick={() => {
+                  if(props.isOpen) {
+                    props.toggleMenu();
+                  }
+                  props.toggleSignIn();
+                }}>Log In</div>
+            )}
           </li>         
            {/* <li>
             <Link to="/home-owner">For Homeowners</Link>

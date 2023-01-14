@@ -1,12 +1,12 @@
 import { createSlice } from "@reduxjs/toolkit"
 import { useActionData } from "react-router-dom";
+import { AuthReduxState } from "../utils/types";
 
 // Logic needed for react redux. Update this as we need it.
 
-const initialState = {
+const initialState: AuthReduxState = {
   user: null,
-  token: null,
-  houses: []
+  token: null
 }
 
 export const authSlice = createSlice({
@@ -20,12 +20,16 @@ export const authSlice = createSlice({
     setLogout: (state) => {
       state.user = null;
       state.token = null;
-    },
-    setHouses: (state, action) => {
-      state.houses = action.payload.houses;
     }
   }
 })
 
-export const { setLogin, setLogout, setHouses} = authSlice.actions;
+// Put these functions in a new slice
+// 
+// setHouses
+// setHouses: (state, action) => {
+//   state.houses = action.payload.houses;
+// }
+
+export const { setLogin, setLogout } = authSlice.actions;
 export default authSlice.reducer;

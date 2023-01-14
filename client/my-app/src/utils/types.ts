@@ -37,5 +37,9 @@ export type AppState = {
   properties: House[]
 }
 
+export type AuthReduxState = {
+  user: string | null,
+  token: string | null
+}
 
 export {};

@@ -6,11 +6,9 @@ import User from "../models/User.js";
 // CREATE
 export const addHouse = async (req, res) => {
   try {
-    const { homeOwnerId, streetAddress, numBathrooms, numBedrooms, monthlyRent} = req.body;
-    const Homeowner = await User.findById(homeOwnerId)
+    const { homeOwnerId, streetAddress, numBathrooms, numBedrooms, monthlyRent } = req.body;
     const newHouse = new House({
-      ownerFirstName: Homeowner.firstName,
-      ownerLastName: Homeowner.lastName,
+      owner: homeOwnerId,
       streetAddress,
       numBedrooms,
       numBathrooms,

@@ -2,6 +2,7 @@ import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import ContactForm from "../models/ContactForm.js";
 import Email from "../models/Email.js";
+import Homeowner from "../models/Homeowner.js";
 import User from "../models/User.js"
 
 // Register the user
@@ -71,24 +72,39 @@ export const register = async (req, res) => {
       lastName,
       email,
       password,
-      phoneNum
+      phoneNum,
+      isHomeowner
     } = req.body;
 
     const salt = await bcrypt.genSalt();
     const passwordHash = await bcrypt.hash(password, salt);   // Encrypts the password
 
-    const newUser = new User({
-      firstName,
-      lastName,
-      email,
-      password: passwordHash,
-      phoneNum
-    });
+    if(isHomeowner){
+      const newHomeowner = new Homeowner({
+        firstName,
+        lastName,
+        email,
+        password: passwordHash,
+        phoneNum
+      });
+      const savedUser = await newHomeowner.save();
+      res.status(201).json(savedUser);      // 201 status code means something was created
+    } else{
+      const newUser = new User({
+        firstName,
+        lastName,
+        email,
+        password: passwordHash,
+        phoneNum
+      });
+      const savedUser = await newUser.save();
+      res.status(201).json(savedUser);      // 201 status code means something was created
 
-    const savedUser = await newUser.save();
-    res.status(201).json(savedUser);      // 201 status code means something was created
+    }
+
 
   } catch (e) {
+    console.log(e)
     res.status(500).json({error: e.message });
   }
 }
@@ -97,7 +113,11 @@ export const register = async (req, res) => {
 export const login = async (req, res) => {
   try {
     const { email, password } = req.body;
-    const user = await User.findOne({email: email});
+    const loginUser = await User.findOne({email: email});
+    const loginHomeOwner = await Homeowner.findOne({email: email})
+
+    var user = (loginUser ? loginUser : loginHomeOwner)
+    
     if (!user) {
       return res.status(400).json({msg: "User does not exist"});
     }

@@ -1,18 +1,10 @@
-import mongoose from "mongoose";
+import mongoose, { Schema } from "mongoose";
 
 const HouseSchema = new mongoose.Schema(
   {
-    ownerFirstName: {
-      type: String,
-      required: true,
-      min: 2,
-      max: 50
-    },
-    ownerLastName: {
-      type: String,
-      required: true,
-      min: 2,
-      max: 50
+    owner: {
+      type: Schema.Types.ObjectId,
+      ref: 'Homeowner'
     },
     streetAddress: {
       type: String,
@@ -30,10 +22,10 @@ const HouseSchema = new mongoose.Schema(
       type: Number,
       required: true
     },
-    interestedTenants: {
-      type: Array,
-      default: []
-    }
+    interestedTenants: [{
+      type: Schema.Types.ObjectId,
+      ref: 'User'
+    }]
   },
   {timestamps: true}
 )

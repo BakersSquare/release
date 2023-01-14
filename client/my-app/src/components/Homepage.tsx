@@ -29,7 +29,6 @@ const emailInterest = async (values:any) => {
     }
     else{
       createToast("It looks like that email is already a part of our emailing list. Thanks again for the interest!", Intent.WARNING)
-
     }
 }
 

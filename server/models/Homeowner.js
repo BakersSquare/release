@@ -1,6 +1,6 @@
 import mongoose, { Schema } from "mongoose";
 
-const UserSchema = new mongoose.Schema(
+const homeowner = new mongoose.Schema(
   {
     firstName: {
       type: String,
@@ -23,7 +23,7 @@ const UserSchema = new mongoose.Schema(
       max: 50,
       unique: true
     },
-    password: {
+    password: {                   // Find how to add more configurations to this one, it should be more secure
       type: String,
       required: true,
       default:"",
@@ -42,6 +42,6 @@ const UserSchema = new mongoose.Schema(
   {timestamps: true}
 );
 
-const User = mongoose.model("User", UserSchema);
+const Homeowner = mongoose.model("Homeowner", homeowner);
 
-export default User;
+export default Homeowner;
