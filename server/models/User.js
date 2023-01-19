@@ -34,6 +34,14 @@ const UserSchema = new mongoose.Schema(
       required: false,
       default: ""
     },
+    resume: {
+      type: String,
+      default: ""
+    },
+    transcript: {
+      type: String,
+      default: ""
+    },
     houses: [{
       type: Schema.Types.ObjectId,
       ref: 'House'

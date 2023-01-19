@@ -38,7 +38,7 @@ export type AppState = {
 }
 
 export type AuthReduxState = {
-  user: string | null,
+  user: any | null,
   token: string | null
 }
 

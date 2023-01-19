@@ -25,7 +25,7 @@ function SignInCard(props: Props) {
   const [pageType, setPageType] = useState(pageTypes.LOGIN);
   const [isChecked, setChecked] = useState(false);
 
-  // const userId = useSelector((state: AuthReduxState) => state.user)
+  const userId = useSelector((state: AuthReduxState) => state.user)
   const token = useSelector((state: AuthReduxState) => state.token)
 
 
@@ -37,14 +37,10 @@ function SignInCard(props: Props) {
 
   function handlePageType(){
     switch(pageType){
-      // case pageTypes.LOGIN: setPageType(pageTypes.REGISTER); break;
-      // case pageTypes.REGISTER: setPageType(pageTypes.LOGIN); break;
-      // case pageTypes.EXTENDED_STUDENT: props.toggleSignIn(); setPageType(pageTypes.LOGIN); break;
-      // case pageTypes.EXTENDED_HOMEOWNER: props.toggleSignIn(); setPageType(pageTypes.LOGIN); break;
-      case pageTypes.LOGIN: setPageType(pageTypes.EXTENDED_STUDENT); break;
-      case pageTypes.REGISTER: setPageType(pageTypes.EXTENDED_STUDENT); break;
-      case pageTypes.EXTENDED_STUDENT: props.toggleSignIn(); setPageType(pageTypes.EXTENDED_STUDENT); break;
-      case pageTypes.EXTENDED_HOMEOWNER: props.toggleSignIn(); setPageType(pageTypes.EXTENDED_STUDENT); break;
+      case pageTypes.LOGIN: setPageType(pageTypes.REGISTER); break;
+      case pageTypes.REGISTER: setPageType(pageTypes.LOGIN); break;
+      case pageTypes.EXTENDED_STUDENT: props.toggleSignIn(); setPageType(pageTypes.LOGIN); break;
+      case pageTypes.EXTENDED_HOMEOWNER: props.toggleSignIn(); setPageType(pageTypes.LOGIN); break;
       default: setPageType(pageTypes.LOGIN); break;
     }
   }
@@ -107,9 +103,8 @@ function SignInCard(props: Props) {
         // Automatically sign in
         let loginData = {
           email: values.email,
-          password: values.password,
-          isHomeowner: values['isHomeowner']
-        }
+          password: values.password
+          }
         const backendResponse = await fetch(
           `${serverURL}/auth/login`,
           {
@@ -119,7 +114,6 @@ function SignInCard(props: Props) {
           }
         );
           const loggedIn = await backendResponse.json();
-          console.log(loggedIn)
           // If you log in, set the token
           if(!loggedIn.error && !loggedIn.msg){
             dispatch(
@@ -143,6 +137,34 @@ function SignInCard(props: Props) {
   }
 
   const uploadFiles = async (values: any) => {
+    const formData = new FormData();
+
+    for (let value in values) {
+      formData.append(value, values[value]);
+    }
+
+    if(userId){
+      const uploadedFileResponse = await fetch(
+        `${serverURL}/users/${userId._id}/uploadFiles`,
+        {
+          method: "PATCH",
+          headers: {"Authorization": `Bearer ${token}`},
+          body: formData
+        } 
+        )
+        const didUpload = await uploadedFileResponse.json()
+        if(!didUpload.error){
+          // Thanks for uploading, {text decoration underline ->} 'Why do we ask this of you?' -> Develop short about page
+          createToast(`Thanks for telling us a bit about yourself. We'll start connecting you with potential homeowners as we develop additional features!`, Intent.PRIMARY, 2000)
+          props.toggleSignIn();    
+        }
+        else{
+          createToast("It seems there was a problem uploading your documents. Currently, we only accept PDFs. Please contact us if you believe this to be a mistake!", Intent.WARNING)
+        }
+    } else{
+        createToast("Something went wrong, it seems like we weren't able to find your account. Please contact us if you believe this to be a mistake!", Intent.WARNING)
+        props.toggleSignIn();
+    }
   }
 
   const uploadHouse = async (values: any) => {
@@ -157,7 +179,7 @@ function SignInCard(props: Props) {
       {
         method: "POST",
         headers: {"Authorization": `Bearer ${token}`},
-        body: formData
+        body: JSON.stringify(values)
       }
     )
   
@@ -184,9 +206,7 @@ function SignInCard(props: Props) {
     } else{
         // is HomeOwner form
         await uploadHouse(values);
-    }
-    // Here is where we should toggle the props. We'll need redux to do that and close the form
-  
+    }  
   }
 
   function registerState(){
@@ -272,10 +292,10 @@ function SignInCard(props: Props) {
                                 <div {...getRootProps()} className="register-drop-zone"
                                 >
                                   <input {...getInputProps()}/>
-                                  {!values.resume ? (
+                                  {!values.resume.name ? (
                                       "Resume"
                                   ) : (
-                                    `${values.resume}`
+                                    `${values.resume.name}`
                                   )}
                                 </div>
                             </div>
@@ -283,7 +303,7 @@ function SignInCard(props: Props) {
                           )}
                         </Dropzone>
                         <Dropzone accept={{'application/pdf': ['.pdf']}} multiple={false} onDrop={(acceptedFiles) => {
-                          setFieldValue("Transcript", acceptedFiles[0])
+                          setFieldValue("transcript", acceptedFiles[0])
                         }}>
                           {({getRootProps, getInputProps}) => (
                             <div className="dropzone-outline">
@@ -291,10 +311,10 @@ function SignInCard(props: Props) {
                                 <div {...getRootProps()} className="register-drop-zone"
                                 >
                                   <input {...getInputProps()}/>
-                                  {!values.transcript ? (
+                                  {!values.transcript.name ? (
                                       "Transcript"
                                   ) : (
-                                    `${values.transcript}`
+                                    `${values.transcript.name}`
                                   )}
                                 </div>
                             </div>
@@ -420,10 +440,5 @@ function SignInCard(props: Props) {
     </Dialog>
   )
 }
-
-
-
-
-
 
 export default SignInCard;

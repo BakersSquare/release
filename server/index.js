@@ -12,19 +12,19 @@ import authRoutes from "./routes/auth.js"
 import studentRoutes from "./routes/users.js"
 import houseRoutes from "./routes/houses.js"
 import { addHouse } from "./controllers/houses.js"
-// import userRoutes from "./routes/users.js"
+import userRoutes from "./routes/users.js"
 // import postRoutes from "./routes/posts.js"
 import { register, contactForm } from "./controllers/auth.js"
-import { verifyToken } from "./middleware/auth.js";
+import { uploadFiles } from "./controllers/users.js";
+import * as fs from 'fs'
 
 //https://www.youtube.com/watch?v=VsUzmlZfYNg
 
 // Configurations
 const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+export const __dirname = path.dirname(__filename);
 dotenv.config();
 const app = express();
-app.use(express.json());
 app.use(helmet());
 app.use(helmet.crossOriginResourcePolicy({policy: "cross-origin"}));
 app.use(morgan("common"));
@@ -33,30 +33,33 @@ app.use(bodyParser.urlencoded({ limit: "30mb", extended: true}));
 app.use(cors({
   origin: ["http://localhost:3000", "https://re-lease.onrender.com"]
 }));
-app.use("/assets", express.static(path.join(__dirname, 'public/assets')));  // Sets the directory for our assets (images). These will need to be stored in cloud storage later in production.
+// app.use("/assets", express.static(path.join(__dirname, 'public/assets')));  // Sets the directory for our assets (images). These will need to be stored in cloud storage later in production.
 
-// File Storage Config
+// File Storage Config - Set dfeault location for file storage
 const storage = multer.diskStorage({
-  destination: function (req, file, cb){
-    cb(null, "public/assets");
+  destination: function(req, file, cb){
+    const {id} = req.params;  // Change the destination to be a subfolder of ./users/{userId}/profileFiles
+    const path = `./public/users/${id}/`
+    fs.mkdirSync(path, { recursive: true })
+    cb(null, path);
   },
-  filename: function (req, file, cb) {
-    cb(null, file.originalname);
+  filename: function(req, file, cb) {
+    
+    cb(null, `${file.fieldname}.pdf`);
   }
 })
-const upload = multer({storage});
+const upload = multer({storage: storage});
 
 // Routes with files. Multer is a middleware that handles file upload. We can use upload.single() | upload.array() | upload.none()
-app.post("/auth/register", upload.single("picture"), register);
-app.post("/contactForm", upload.none(), contactForm)
+// upload.fields is used because we're calling multer from a 2 file upload, both of which get their names from the formik field/ data model.
+app.patch("/users/:id/uploadFiles", upload.fields([{name: "resume", maxCount: 1}, {name: "transcript", maxCount: 1}]), uploadFiles)
 
 // Other routes (No file uploads, thus upload.none())
+app.post("/auth/register", upload.none(), register);
+app.post("/contactForm", upload.none(), contactForm)
 app.use("/auth", upload.none(), authRoutes);
 app.use("/house", upload.none(), houseRoutes)
-
-// He's using userRoutes to generically define the functions you should be able to use to grab information about generic users (Friends, profile info, etc). We will also need this because our application will have a houseArray + default profile info
-// app.use("/users", userRoutes);
-// app.use("/posts", postRoutes);
+app.use("/users", userRoutes);
 
 // Mongoose setup
 const CONNECT_URI = process.env.MONGODB_URI;

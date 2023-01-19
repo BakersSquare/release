@@ -1,5 +1,7 @@
 import User from "../models/User.js";
 import House from "../models/House.js";
+import { __dirname } from "../index.js";
+import * as path from "path"
 
 // Read
 export const getUser = async (req, res) => {
@@ -54,6 +56,61 @@ export const addRemoveHouseInterest = async (req, res) => {
       }
     );
     res.status(200).json(formattedData);
+
+  } catch (err) {
+    res.status(404).json({ message: err.message});
+  }
+}
+
+// Upload files works correctly
+export const uploadFiles = async (req, res) => {
+  try {
+    const {resume, transcript} = req.files;
+    const { id } = req.params;
+
+    const updatedStudent = await User.findByIdAndUpdate(
+      id,
+      {
+        resume: resume[0].path,
+        transcript: transcript[0].path
+      },
+      { new: true }
+    )
+
+    res.status(200).json(updatedStudent);
+  } catch (err) {
+    res.status(404).json({ message: err.message});
+  }
+}
+
+// Getters work correctly
+export const getResume = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const user = await User.findById(id);
+    let resumePath = path.join(__dirname, user.resume) ;
+    console.log(user)
+    console.log(resumePath)
+
+    res.sendFile(resumePath)
+    //res.download(resumePath)  // Download file literally downloads the file.
+
+    
+  } catch (err) {
+    res.status(404).json({ message: err.message});
+  }
+}
+
+export const getTranscript = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const user = await User.findById(id);
+    let transcriptPath = path.join(__dirname, user.transcript) ;
+    console.log(user)
+    console.log(transcriptPath)
+
+    res.sendFile(transcriptPath)
+    //res.download(transcriptPath)  // Download file literally downloads the file.
 
   } catch (err) {
     res.status(404).json({ message: err.message});

@@ -53,9 +53,8 @@ function Navbar (props: Props) {
                 props.toggleMenu();
               }
               createToast("Now logged out!", Intent.PRIMARY)
-            }
-            
-            }>Log Out</Link> : (
+            }}>Log Out</Link> :
+             (
                 <div className="sign-in-label"onClick={() => {
                   if(props.isOpen) {
                     props.toggleMenu();

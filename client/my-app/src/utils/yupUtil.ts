@@ -19,16 +19,10 @@ export const initialValuesRegister = {
 
 export const secondaryValuesRegister = {
   resume: {
-    fileName: "",
-    filePath: ""
+    name: ""
   },
   transcript: {
-    fileName: "",
-    filePath: ""
-  },
-  profilePic: {
-    fileName: "",
-    filePath: ""
+    name: ""
   }
 }
 
@@ -63,12 +57,6 @@ export const initialRegisterSchema = yup.object().shape({
 })
 
 export const secondaryRegisterSchema = yup.object().shape({
-  resume: yup.object().shape({
-    fileName: yup.string().required(),
-    filePath: yup.string().required(),
-  }),
-  transcript: yup.object().shape({
-    fileName: yup.string().required(),
-    filePath: yup.string().required(),
-  })
+  resume: yup.string(),
+  transcript:yup.string()
 })
