@@ -39,7 +39,7 @@ app.use(cors({
 const storage = multer.diskStorage({
   destination: function(req, file, cb){
     const {id} = req.params;  // Change the destination to be a subfolder of ./users/{userId}/profileFiles
-    const path = `./public/users/${id}/`
+    const path = `${process.env.PATH_TO_DISK}/users/${id}/`
     fs.mkdirSync(path, { recursive: true })
     cb(null, path);
   },
