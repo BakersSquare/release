@@ -171,24 +171,22 @@ function SignInCard(props: Props) {
 
   const uploadHouse = async (values: any) => {
     const formData = new FormData();
-  
+
     for (let value in values) {
       formData.append(value, values[value]);
     }
   
     const backendResponse = await fetch(
-      `${serverURL}/house/addHouse`,
+      `${serverURL}/house/${userId._id}/addHouse`,
       {
         method: "POST",
         headers: {"Authorization": `Bearer ${token}`},
-        body: JSON.stringify(values)
+        body: formData
       }
     )
   
       const savedHouse = await backendResponse.json();
       if(!savedHouse.error){
-        // Here is where we should put ToggleSignin. We'll have to get comfortable with redux in order to do it though.
-        // After registering, let's sign the user in
         createToast("Thanks for listing! Be on the alert for messages relating to a new lease.", Intent.PRIMARY)
         props.toggleSignIn();
         return savedHouse;

@@ -6,11 +6,11 @@ const router = express.Router();
 
 /* READ */
 router.get("/", verifyToken, getFeedHouses)   // Gets all homes in the area to display
-router.get("/:userId/houses", verifyToken, getHomeownerHouses) // Gets a profiles houses
+router.get("/:id/houses", verifyToken, getHomeownerHouses) // Gets a profiles houses
 
 /* UPDATE */
-router.patch("/:userId/favoriteHouse", verifyToken, favoriteHouse);
+router.patch("/:id/favoriteHouse", verifyToken, favoriteHouse);
 
 /* CREATE */
-router.post("/addHouse", verifyToken, addHouse)
+router.post("/:id/addHouse", verifyToken, addHouse)
 export default router;

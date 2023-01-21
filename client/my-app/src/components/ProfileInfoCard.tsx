@@ -55,24 +55,22 @@ function ProfileInfoCard(props: Props) {
 
   const uploadHouse = async (values: any) => {
     const formData = new FormData();
-  
+
     for (let value in values) {
       formData.append(value, values[value]);
     }
   
     const backendResponse = await fetch(
-      `${serverURL}/house/addHouse`,
+      `${serverURL}/house/${userId._id}/addHouse`,
       {
         method: "POST",
         headers: {"Authorization": `Bearer ${token}`},
-        body: JSON.stringify(values)
+        body: formData
       }
     )
   
       const savedHouse = await backendResponse.json();
       if(!savedHouse.error){
-        // Here is where we should put toggleProfile. We'll have to get comfortable with redux in order to do it though.
-        // After registering, let's sign the user in
         createToast("Thanks for listing! Be on the alert for messages relating to a new lease.", Intent.PRIMARY)
         props.toggleProfile();
         return savedHouse;
@@ -167,8 +165,8 @@ function ProfileInfoCard(props: Props) {
     return(
       <>
       <div style={{display:"flex", flexDirection:"column", alignItems:"center"}}>
-          <h2>Thanks for signing up with us!</h2>
-          <h3>Now tell us about this house...</h3>
+          <h2>Have another house to lease?</h2>
+          <h3>Let us help you look!</h3>
           <hr/>
       </div>
       <Formik 

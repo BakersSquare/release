@@ -1,23 +1,29 @@
 import House from "../models/House.js";
+import Homeowner from "../models/Homeowner.js";
 import User from "../models/User.js";
-// import Homeowner from "../models/Homeowner"
 
 
 // CREATE
 export const addHouse = async (req, res) => {
   try {
-    const { homeOwnerId, streetAddress, numBathrooms, numBedrooms, monthlyRent } = req.body;
+    const { id } = req.params;
+    const { streetAddress, numBathrooms, numBedrooms, monthlyRent } = req.body;
     const newHouse = new House({
-      owner: homeOwnerId,
-      streetAddress,
-      numBedrooms,
-      numBathrooms,
-      monthlyRent,
+      owner: id,
+      streetAddress: streetAddress,
+      numBedrooms: numBedrooms,
+      numBathrooms: numBathrooms,
+      monthlyRent: monthlyRent
     })
-    const constSavedUser = await newHouse.save();
-    res.status(201).json(constSavedUser);
+    const savedHouse = await newHouse.save();
+
+    const owner = await Homeowner.findById(id);
+    owner.houses.push(savedHouse._id);
+    await owner.save();
+
+    res.status(201).json(savedHouse);
   } catch (err) {
-    res.status(409).json({message: err.message})
+    res.status(404).json({error: err.message})
   }
 }
 

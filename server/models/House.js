@@ -8,6 +8,7 @@ const HouseSchema = new mongoose.Schema(
     },
     streetAddress: {
       type: String,
+      unique: true,
       required: true
     },
     numBedrooms: {
