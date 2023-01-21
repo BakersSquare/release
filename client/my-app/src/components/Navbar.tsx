@@ -11,20 +11,14 @@ import { createToast } from "../utils/util";
 type Props = {
   isOpen: boolean,
   toggleMenu: () => void,
-  toggleSignIn: () => void
+  toggleSignIn: () => void,
+  toggleProfile: () => void
 };
 
 function Navbar (props: Props) {
-  const [isMobileMenuToggled, setIsMobileMenuToggled] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const isAuth = Boolean(useSelector((state: AuthReduxState) => state.token))
-
-  /*
-        dispatch(
-          setLogin()
-        )
-  */
 
   return (
       <div className="header">
@@ -45,7 +39,8 @@ function Navbar (props: Props) {
             <Link to="/contact">Contact Us</Link>
           </li>
           <li>
-            { isAuth ? <Link to="/" onClick={() => {
+            { isAuth ? 
+            <Link to="/" onClick={() => {
               dispatch(
                 setLogout()
               )
@@ -53,7 +48,8 @@ function Navbar (props: Props) {
                 props.toggleMenu();
               }
               createToast("Now logged out!", Intent.PRIMARY)
-            }}>Log Out</Link> :
+            }}>Log Out</Link> 
+            :
              (
                 <div className="sign-in-label"onClick={() => {
                   if(props.isOpen) {
@@ -62,7 +58,18 @@ function Navbar (props: Props) {
                   props.toggleSignIn();
                 }}>Log In</div>
             )}
-          </li>         
+          </li>  
+          {isAuth ? (
+            <li>
+                <div className="sign-in-label"onClick={() => {
+                  if(props.isOpen) {
+                    props.toggleMenu();
+                  }
+                  props.toggleProfile();
+                }}>Profile</div>
+
+            </li> ):
+             <></>}       
            {/* <li>
             <Link to="/home-owner">For Homeowners</Link>
           </li> */}

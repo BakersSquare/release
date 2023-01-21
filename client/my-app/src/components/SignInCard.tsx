@@ -5,7 +5,7 @@ import Dropzone from "react-dropzone";
 import { useDispatch, useSelector } from "react-redux";
 import { serverURL } from "../App";
 import { setLogin } from "../state";
-import { AuthReduxState } from "../utils/types";
+import { AccountType, AuthReduxState } from "../utils/types";
 import { createToast } from "../utils/util";
 import { secondaryValuesRegister, secondaryRegisterSchema, initialValuesRegister, initialRegisterSchema, initialValuesLogin, loginSchema, homeValuesRegister, homeValuesSchema } from "../utils/yupUtil";
 
@@ -63,7 +63,8 @@ function SignInCard(props: Props) {
         dispatch(
           setLogin({
             user: loggedIn.user,
-            token: loggedIn.token
+            token: loggedIn.token,
+            accountType: loggedIn.accountType
           })
         )
         createToast(`Now logged in. Welcome back, ${loggedIn.user.firstName}.`, Intent.PRIMARY, 2000)
@@ -119,7 +120,8 @@ function SignInCard(props: Props) {
             dispatch(
               setLogin({
                 user: loggedIn.user,
-                token: loggedIn.token
+                token: loggedIn.token,
+                accountType: (isChecked ? AccountType.HOMEOWNER : AccountType.STUDENT)
               })
             )
             if(isChecked){

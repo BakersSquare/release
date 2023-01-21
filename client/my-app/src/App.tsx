@@ -8,6 +8,7 @@ import { Route, Routes } from "react-router-dom"
 import Contact from "./components/Contact"
 import SignInCard from "./components/SignInCard"
 import { Position, Toaster } from "@blueprintjs/core";
+import ProfileInfoCard from "./components/ProfileInfoCard";
 
 export const serverURL = process.env.REACT_APP_SERVER_URL;
 
@@ -25,6 +26,7 @@ function App() {
   
 
   const [openNavMenu, setOpenNavMenu] = useState(false);
+  const [openProfile, setOpenProfile] = useState(false);
   const [openSignInCard, setSignInCard] = useState(false);
   const hamburgerClick = (): void => {
     setOpenNavMenu(!openNavMenu);
@@ -32,12 +34,17 @@ function App() {
   const signInClick = (): void => {
     setSignInCard(!openSignInCard);
   }
+  const profileClick = (): void => {
+    setOpenProfile(!openProfile);
+  }
+
   return (
     <BrowserRouter>
     <div className="app-container">
       
-      <Navbar isOpen={openNavMenu} toggleMenu={hamburgerClick} toggleSignIn={signInClick}/>
+      <Navbar isOpen={openNavMenu} toggleMenu={hamburgerClick} toggleSignIn={signInClick} toggleProfile={profileClick}/>
       <SignInCard isOpen={openSignInCard} toggleSignIn={signInClick}/>
+      <ProfileInfoCard isOpen={openProfile} toggleProfile={profileClick}/>
       <Routes>
         <Route path="/" element={<Homepage/>}/>
         <Route path="/contact" element={<Contact />}/>

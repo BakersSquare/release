@@ -89,9 +89,7 @@ export const getResume = async (req, res) => {
     const { id } = req.params;
     const user = await User.findById(id);
     let resumePath = path.join(__dirname, user.resume) ;
-    console.log(user)
-    console.log(resumePath)
-
+    
     res.sendFile(resumePath)
     //res.download(resumePath)  // Download file literally downloads the file.
 
@@ -106,8 +104,6 @@ export const getTranscript = async (req, res) => {
     const { id } = req.params;
     const user = await User.findById(id);
     let transcriptPath = path.join(__dirname, user.transcript) ;
-    console.log(user)
-    console.log(transcriptPath)
 
     res.sendFile(transcriptPath)
     //res.download(transcriptPath)  // Download file literally downloads the file.

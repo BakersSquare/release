@@ -31,6 +31,11 @@ export type Homeowner = {
   bio?: string,
 }
 
+export enum AccountType {
+  STUDENT=0,
+  HOMEOWNER,
+  SIGNEDOUT
+}
 export type AppState = {
   user: User,
   token: string,
@@ -39,7 +44,8 @@ export type AppState = {
 
 export type AuthReduxState = {
   user: any | null,
-  token: string | null
+  token: string | null,
+  accountType: AccountType
 }
 
 export {};

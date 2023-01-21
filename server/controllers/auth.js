@@ -109,13 +109,20 @@ export const register = async (req, res) => {
 // Login function - Consider replacing this with a different authentication to improve security
 export const login = async (req, res) => {
   try {
+    var user;
+    var accountType;
     const { email, password } = req.body;
     const loginUser = await User.findOne({email: email});
     const loginHomeOwner = await Homeowner.findOne({email: email})
 
-    var user = (loginUser ? loginUser : loginHomeOwner)
-
-    if (!user) {
+    // Set the account type according to the enum values
+    if(loginUser){
+      user = loginUser;
+      accountType = 0;
+    } else if(loginHomeOwner){
+      user = loginHomeOwner;
+      accountType = 1;
+    } else{
       return res.status(400).json({msg: "User does not exist"});
     }
   
@@ -126,7 +133,7 @@ export const login = async (req, res) => {
 
     const token = jwt.sign({id: user.id}, process.env.JWT_SECRET);
     delete user.password;
-    res.status(200).json({token, user});
+    res.status(200).json({token, user, accountType});
 
   } catch (e) {
     res.status(500).json({error: err.message });
