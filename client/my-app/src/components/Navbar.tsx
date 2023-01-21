@@ -65,7 +65,9 @@ function Navbar (props: Props) {
                   if(props.isOpen) {
                     props.toggleMenu();
                   }
-                  props.toggleProfile();
+                  if(isAuth){
+                    props.toggleProfile();
+                  }
                 }}>Profile</div>
 
             </li> ):
