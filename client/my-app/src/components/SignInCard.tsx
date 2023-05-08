@@ -126,8 +126,10 @@ function SignInCard(props: Props) {
             )
             if(isChecked){
               setPageType(pageTypes.EXTENDED_HOMEOWNER);
-            } else{
-              setPageType(pageTypes.EXTENDED_STUDENT);
+            }  else{
+              //Disabling the document uploading, thus allowing for free web-service deployment (or at least no disk-space payment) until necessary
+              props.toggleSignIn(); 
+              //setPageType(pageTypes.EXTENDED_STUDENT);
             }
           } 
 

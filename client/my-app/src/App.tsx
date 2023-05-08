@@ -44,7 +44,8 @@ function App() {
       
       <Navbar isOpen={openNavMenu} toggleMenu={hamburgerClick} toggleSignIn={signInClick} toggleProfile={profileClick}/>
       <SignInCard isOpen={openSignInCard} toggleSignIn={signInClick}/>
-      <ProfileInfoCard isOpen={openProfile} toggleProfile={profileClick}/>
+      {/* Disabling file uploading to avoid for disk storage payment */}
+      {/* <ProfileInfoCard isOpen={openProfile} toggleProfile={profileClick}/> */}
       <Routes>
         <Route path="/" element={<Homepage/>}/>
         <Route path="/contact" element={<Contact />}/>

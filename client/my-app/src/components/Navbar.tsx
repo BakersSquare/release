@@ -59,6 +59,7 @@ function Navbar (props: Props) {
                 }}>Log In</div>
             )}
           </li>  
+          {/* Disabling file upload to avoid disk storage fee
           {isAuth ? (
             <li>
                 <div className="sign-in-label"onClick={() => {
@@ -71,7 +72,7 @@ function Navbar (props: Props) {
                 }}>Profile</div>
 
             </li> ):
-             <></>}       
+             <></>}        */}
            {/* <li>
             <Link to="/home-owner">For Homeowners</Link>
           </li> */}
